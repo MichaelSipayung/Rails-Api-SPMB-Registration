@@ -1,12 +1,13 @@
 #include "main.h"
 
 int main() {
-  // cout << registerUser();
-  cout << loginUser();
+  cout << registerUser();
+  cout << loginUser()<<std::endl;
   loginToken();
-  // cout << showAllUser();
-  // cout << showUser();
-  cout << updateUser();
+  cout << showAllUser()<<std::endl;
+  cout << showUser()<<std::endl;
+  cout << updateUser()<<std::endl;
+  cout << deleteUser()<<std::endl;
 
   return 0;
 }
@@ -51,9 +52,9 @@ std::string sendRequest(const std::string &method = "", const std::string &url="
 }
 const string registerUser() {
   nlohmann::json registerData;
-  registerData["name"] = "Andreas";
-  registerData["username"] = "Andreas1";
-  registerData["email"] = "andreas123@gmail.com";
+  registerData["name"] = "yuniar";
+  registerData["username"] = "yuniar";
+  registerData["email"] = "yuniar@gmail.com";
   registerData["password"] = "password";
   registerData["password_confirmation"] = "password";
   nlohmann::json send_POST;
@@ -64,7 +65,7 @@ const string registerUser() {
 }
 const string loginUser() {
   nlohmann::json loginData;
-  loginData["email"] = "andreas123@gmail.com";
+  loginData["email"] = "yuniar@gmail.com";
   loginData["password"] = "password";
   auto result =
       sendRequest("POST", "http://localhost:3000/auth/login", loginData.dump());
@@ -76,10 +77,8 @@ const string showAllUser() {
   return all_user;
 }
 const string showUser() {
-  nlohmann::json show_user;
-  show_user["username"] = "Andreas1";
   auto user_result =
-      sendRequest("GET", "http://localhost:3000/Andreas1", "", loginToken());
+      sendRequest("GET", "http://localhost:3000/users/yuniar", "", loginToken());
   return user_result;
 }
 const string loginToken() {
@@ -89,13 +88,17 @@ const string loginToken() {
 }
 const string updateUser() {
   nlohmann::json updateData;
-  updateData["name"] = "Andreas";
-  updateData["password"] = "password1";
-  updateData["email"] = "andreassan@gmail.com";
+  updateData["name"] = "yuniar gultom";
+  updateData["password"] = "password";
+  updateData["email"] = "yuniar@gmail.com";
   nlohmann::json send_PATCH;
   send_PATCH["user"] = updateData;
   auto update_result =
-      sendRequest("PATCH", "http://localhost:3000/users/Andreas1",
+      sendRequest("PATCH", "http://localhost:3000/users/yuniar",
                   send_PATCH.dump(), loginToken());
   return update_result;
+}
+const string deleteUser(){
+  auto delete_result = sendRequest("DELETE", "http://localhost:3000/users/yuniar", "", loginToken());
+  return delete_result;
 }
